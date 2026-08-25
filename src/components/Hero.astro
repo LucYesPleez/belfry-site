@@ -1,11 +1,30 @@
 ---
-import { Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
 import hero from '../assets/hero.jpg';
+import heroPortrait from '../assets/hero-portrait.jpg';
 import SiteHeader from './SiteHeader.astro';
+
+// Art-directed rather than letting `cover` slice the landscape frame: in a
+// tall box it keeps about a third of the width, and that third is balustrade.
+// The portrait cut is taken from the right of the same photo, where the
+// seating, the flowers and the mountains stack into a vertical composition.
+const wide = await getImage({ src: hero, widths: [900, 1400, 2000], format: 'webp', quality: 78 });
+const tall = await getImage({ src: heroPortrait, widths: [450, 900], format: 'webp', quality: 80 });
 ---
 
 <section class="hero">
-  <Image class="shot" src={hero} alt="Sunset over the mountains from the Belfry verandah" widths={[900, 1400, 2000]} sizes="100vw" quality={78} loading="eager" fetchpriority="high" />
+  <picture class="shot">
+    <source media="(max-width: 60rem)" srcset={tall.srcSet.attribute} sizes="100vw" type="image/webp" />
+    <source srcset={wide.srcSet.attribute} sizes="100vw" type="image/webp" />
+    <img
+      src={wide.src}
+      alt="Sunset over the mountains from the Belfry verandah"
+      width={2000}
+      height={1333}
+      loading="eager"
+      fetchpriority="high"
+    />
+  </picture>
   <div class="wash"></div>
   <div class="top-wash"></div>
 
@@ -30,7 +49,8 @@ import SiteHeader from './SiteHeader.astro';
     overflow: hidden;
   }
 
-  .shot {
+  .shot,
+  .shot img {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -103,12 +123,6 @@ import SiteHeader from './SiteHeader.astro';
     .hero {
       min-height: 82svh;
       justify-content: flex-end;
-    }
-    /* A 3:2 photo in a tall portrait box crops to roughly a third of its
-       width. Bias the crop left so the valley and the mountains survive
-       instead of centring on the balustrade. */
-    .shot {
-      object-position: 32% 50%;
     }
     .wash {
       background: linear-gradient(
