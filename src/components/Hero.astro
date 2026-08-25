@@ -1,0 +1,117 @@
+---
+import { Image } from 'astro:assets';
+import hero from '../assets/hero.jpg';
+import SiteHeader from './SiteHeader.astro';
+---
+
+<section class="hero">
+  <Image class="shot" src={hero} alt="Sunset over the mountains from the Belfry verandah" widths={[900, 1400, 2000]} sizes="100vw" quality={78} loading="eager" fetchpriority="high" />
+  <div class="wash"></div>
+  <div class="top-wash"></div>
+
+  <SiteHeader />
+
+  <div class="copy wrap">
+    <p class="welcome">Welcome to</p>
+    <h1 class="display name">The Belfry</h1>
+    <p class="display kind">Guesthouse &amp; Retreat</p>
+    <p class="place">Bellingen &nbsp;&middot;&nbsp; NSW</p>
+    <a class="btn btn-solid" href="/book">Book your stay</a>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: min(48.75rem, 92svh);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .shot {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .wash {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(24, 20, 14, 0.74) 0%,
+      rgba(24, 20, 14, 0.45) 42%,
+      rgba(24, 20, 14, 0.1) 72%,
+      rgba(24, 20, 14, 0.28) 100%
+    );
+  }
+
+  .top-wash {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(20, 17, 12, 0.2) 0%, rgba(20, 17, 12, 0) 30%);
+  }
+
+  .copy {
+    position: relative;
+    width: 100%;
+    padding-top: 4rem;
+  }
+
+  .welcome {
+    font-size: 0.8125rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: #e8e2d6;
+  }
+
+  .name {
+    font-size: clamp(3rem, 7vw, 5.25rem);
+    letter-spacing: 0.045em;
+    line-height: 1.02;
+    color: #fdfcf8;
+    margin-top: 1.375rem;
+    text-transform: uppercase;
+  }
+
+  .kind {
+    font-size: clamp(1.375rem, 2.6vw, 2.125rem);
+    line-height: 1.2;
+    color: #f3eee2;
+    margin-top: 1rem;
+  }
+
+  .place {
+    font-size: 0.8125rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: #e2dbcc;
+    margin-top: 1.125rem;
+  }
+
+  .copy .btn {
+    margin-top: 2.125rem;
+  }
+
+  @media (max-width: 60rem) {
+    .hero {
+      min-height: 88svh;
+      justify-content: flex-end;
+    }
+    .wash {
+      background: linear-gradient(
+        180deg,
+        rgba(20, 17, 12, 0.24) 0%,
+        rgba(20, 17, 12, 0.14) 34%,
+        rgba(20, 17, 12, 0.78) 100%
+      );
+    }
+    .copy {
+      padding-block: 0 3rem;
+    }
+  }
+</style>

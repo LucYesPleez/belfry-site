@@ -1,0 +1,63 @@
+---
+---
+
+<section class="cta">
+  <svg class="leaf" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <path d="M14 186C14 96 66 34 186 24c0 100-62 152-152 152H14z" />
+    <path d="M14 186C48 140 96 108 152 84" />
+    <path d="M60 150c14-26 6-52-8-70M104 112c4-28-8-50-26-64M140 82c10-24 6-46-6-62" />
+  </svg>
+
+  <div class="wrap inner">
+    <h2 class="display heading">Ready to stay with us?</h2>
+    <a class="btn book" href="/book">Check availability</a>
+  </div>
+</section>
+
+<style>
+  .cta {
+    position: relative;
+    background: #aeab94;
+    overflow: hidden;
+  }
+
+  .leaf {
+    position: absolute;
+    right: -2rem;
+    top: 50%;
+    translate: 0 -50%;
+    width: clamp(12rem, 22vw, 18rem);
+    color: #9a977f;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1.25rem, 2.5vw, 1.875rem);
+    padding-block: clamp(2.75rem, 5vw, 3.75rem);
+  }
+
+  .heading {
+    font-size: clamp(1.375rem, 2.8vw, 2rem);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #2c2f22;
+    text-align: center;
+  }
+
+  .book {
+    background: #3f4433;
+    color: #f1efe4;
+    letter-spacing: 0.16em;
+    padding: 1.0625rem 2.25rem;
+  }
+
+  .book:hover {
+    background: #2c3024;
+    color: #f1efe4;
+  }
+</style>

@@ -1,0 +1,159 @@
+---
+// Logo artwork not supplied yet — each award renders as a text lockup with a
+// placeholder mark. Drop the real files into src/assets and swap `mark` for an
+// <Image> when they arrive.
+const awards = [
+  { body: 'NSW Regional Tourism Awards', year: '2026', result: 'Hall of Fame' },
+  { body: 'North Coast Tourism Awards', year: '2024', result: 'Gold' },
+  { body: 'NSW Regional Tourism Awards', year: '2025', result: 'Gold' },
+  { body: 'NSW Regional Tourism Awards', year: '2026', result: 'Gold' },
+  { body: 'Australian Tourism Awards', year: '2025', result: 'Highly Commended', highlight: true },
+  { body: 'Quality Tourism', result: 'Accredited Business' },
+  { body: 'Sustainable Tourism', result: 'Accredited Business' },
+];
+---
+
+<section class="awards">
+  <div class="wrap">
+    <div class="title">
+      <span class="rule"></span>
+      <h2>Recognised with care</h2>
+      <span class="rule"></span>
+    </div>
+
+    <ul class="row">
+      {
+        awards.map((a) => (
+          <li>
+            <span class="mark" aria-hidden="true" />
+            <div class="text">
+              <p class="body-name">{a.body}</p>
+              {a.year && <p class="year">{a.year}</p>}
+              <p class:list={['result', { highlight: a.highlight }]}>{a.result}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="thanks display">
+      Thank you to our guests and community for being part of our story.
+    </p>
+  </div>
+</section>
+
+<style>
+  .awards {
+    background: var(--cream-deep);
+    padding-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+  }
+
+  .title h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(0.875rem, 1.4vw, 1.0625rem);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .rule {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .row {
+    list-style: none;
+    margin: clamp(1.75rem, 3vw, 2.5rem) 0 0;
+    padding: 0;
+    display: grid;
+    /* all seven read as one band; they only wrap once there isn't room */
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 1.5rem 0;
+  }
+
+  .row li {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding-inline: 1.25rem;
+    border-left: 1px solid var(--hairline);
+  }
+
+  .row li:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  /* Stand-in for the award artwork. */
+  .mark {
+    flex: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px dashed var(--rule);
+    border-radius: 50%;
+  }
+
+  .body-name {
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  .year {
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    color: var(--body);
+    margin-top: 0.5rem;
+  }
+
+  .result {
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--body);
+    margin-top: 0.125rem;
+  }
+
+  .result.highlight {
+    color: #9a7b2e;
+  }
+
+  .thanks {
+    font-style: italic;
+    font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+    text-align: center;
+    color: var(--body);
+    margin-top: clamp(1.75rem, 3vw, 2.25rem);
+  }
+
+  @media (max-width: 78rem) {
+    .row {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.75rem 0;
+    }
+    .row li:nth-child(4n + 1) {
+      border-left: 0;
+      padding-left: 0;
+    }
+  }
+
+  @media (max-width: 46rem) {
+    .row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .row li {
+      border-left: 0;
+      padding-inline: 0;
+    }
+  }
+</style>

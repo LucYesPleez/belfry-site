@@ -1,0 +1,189 @@
+---
+import { Image } from 'astro:assets';
+import band from '../assets/never-creek.jpg';
+
+const features = [
+  {
+    label: 'Sauna',
+    path: '<path d="M6 22h22v6H6z"/><path d="M9 22V15h16v7"/><path d="M13 11c0-2 2-2 2-4s-2-2-2-4"/><path d="M19 11c0-2 2-2 2-4s-2-2-2-4"/>',
+  },
+  {
+    label: 'Yoga treehouse',
+    path: '<path d="M17 20c-6 0-10-4-10-8.5S11 3 17 3s10 4 10 8.5S23 20 17 20z"/><path d="M12 16v-4.2l5-3.3 5 3.3V16z"/><path d="M17 20v10"/><path d="M13 27h8"/>',
+  },
+  {
+    label: 'Verandahs & decks',
+    path: '<path d="M4 12h26"/><path d="M6 12v16M28 12v16"/><path d="M4 28h26"/><path d="M11 18v10M17 18v10M23 18v10"/><path d="M6 12l11-6 11 6"/>',
+  },
+  {
+    label: 'Beautiful gardens',
+    path: '<path d="M17 30V12"/><path d="M17 18c0-4 3-7 8-7 0 4-3 7-8 7z"/><path d="M17 24c0-4-3-7-8-7 0 4 3 7 8 7z"/><path d="M17 12c0-3 2-6 5-7 0 3-2 6-5 7z"/>',
+  },
+  {
+    label: 'Communal kitchen',
+    path: '<path d="M7 14h20v9a4 4 0 0 1-4 4H11a4 4 0 0 1-4-4z"/><path d="M4 12h26"/><path d="M17 12V8"/><path d="M7 17H4M27 17h3"/>',
+  },
+];
+---
+
+<section class="band">
+  <Image
+    class="shot"
+    src={band}
+    alt="Never Never Creek, running clear through the rainforest"
+    widths={[900, 1400, 1800]}
+    sizes="100vw"
+    quality={72}
+    loading="lazy"
+  />
+  <div class="wash"></div>
+
+  <div class="inner wrap">
+    <div class="words">
+      <p class="eyebrow light">Slow down</p>
+      <h2 class="display heading">More than<br />just a place to stay.</h2>
+      <p class="lede">
+        Sauna in the rainforest. Yoga in the treehouse. Sunrise on the deck. Long lunches with
+        friends. The Belfry is an experience.
+      </p>
+      <a class="btn btn-outline-light" href="/experience">Explore the experience</a>
+    </div>
+
+    <ul class="features">
+      {
+        features.map((f) => (
+          <li>
+            <svg
+              width="34"
+              height="34"
+              viewBox="0 0 34 34"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.1"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              set:html={f.path}
+            />
+            <span>{f.label}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .band {
+    position: relative;
+    overflow: hidden;
+    color: var(--on-dark);
+  }
+
+  .shot {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* The horizontal wash carries the text; the vertical one stops the sunlit
+     bottom of the photo reading as a seam where the band meets what follows. */
+  .wash {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(23, 19, 12, 0) 55%, rgba(23, 19, 12, 0.6) 100%),
+      linear-gradient(
+        90deg,
+        rgba(23, 19, 12, 0.9) 0%,
+        rgba(23, 19, 12, 0.76) 48%,
+        rgba(23, 19, 12, 0.52) 100%
+      );
+  }
+
+  .inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(2rem, 5vw, 4.375rem);
+    padding-block: clamp(2.75rem, 6vw, 3.5rem);
+  }
+
+  .words {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 25rem;
+  }
+
+  .light {
+    color: var(--on-dark-muted);
+  }
+
+  .heading {
+    font-size: clamp(1.625rem, 3vw, 2.25rem);
+    color: var(--on-dark);
+    margin-top: 1rem;
+  }
+
+  .lede {
+    font-size: 0.875rem;
+    line-height: 1.95;
+    color: var(--on-dark-body);
+    margin-top: 1.125rem;
+  }
+
+  .words .btn {
+    margin-top: 1.625rem;
+  }
+
+  .features {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1.875rem;
+    width: min(40rem, 55%);
+    color: #e4dccb;
+  }
+
+  .features li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.875rem;
+    text-align: center;
+  }
+
+  .features span {
+    font-size: 0.625rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 68rem) {
+    .inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .wash {
+      background: rgba(23, 19, 12, 0.86);
+    }
+    .features {
+      width: 100%;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.625rem 0.75rem;
+    }
+  }
+
+  @media (max-width: 34rem) {
+    .features {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

@@ -1,0 +1,151 @@
+---
+const links = [
+  { label: 'Stay', href: '/stay' },
+  { label: 'Experience', href: '/experience' },
+  { label: 'Bellingen', href: '/bellingen' },
+  { label: 'Our Story', href: '/our-story' },
+];
+---
+
+<header class="header">
+  <div class="frost"></div>
+  <div class="bar">
+    <a class="mark" href="/">
+      <span class="mark-name">The Belfry</span>
+      <span class="mark-sub">Guesthouse</span>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+
+    <div class="actions">
+      <a class="btn btn-solid book" href="/book">Book your stay</a>
+      <button class="menu" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 10;
+  }
+
+  /* Translucent bar that dissolves into the photo rather than ending on a line. */
+  .frost {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 6.75rem;
+    background: linear-gradient(
+      180deg,
+      rgba(26, 21, 15, 0.46) 0%,
+      rgba(26, 21, 15, 0.4) 52%,
+      rgba(26, 21, 15, 0) 100%
+    );
+    backdrop-filter: blur(7px);
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 50%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 50%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .bar {
+    position: relative;
+    max-width: var(--max);
+    margin-inline: auto;
+    padding: 1.125rem var(--gutter) 0;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .mark {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    color: #fbf9f4;
+  }
+
+  .mark:hover {
+    color: #fbf9f4;
+  }
+
+  .mark-name {
+    font-family: var(--display);
+    font-size: 1.5625rem;
+    letter-spacing: 0.07em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .mark-sub {
+    font-size: 0.5625rem;
+    letter-spacing: 0.34em;
+    color: #d9d2c4;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .nav {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .nav a {
+    color: #f1ede4;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid transparent;
+  }
+
+  .nav a:hover {
+    color: #fff;
+    border-bottom-color: rgba(241, 237, 228, 0.7);
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 1.625rem;
+  }
+
+  .book {
+    padding: 0.875rem 1.625rem;
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: 0;
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+
+  .menu span {
+    display: block;
+    width: 1.625rem;
+    height: 1.5px;
+    background: #f1ede4;
+  }
+
+  @media (max-width: 60rem) {
+    .nav,
+    .book {
+      display: none;
+    }
+    .bar {
+      justify-content: space-between;
+      gap: 1rem;
+      padding-top: 0.875rem;
+    }
+  }
+</style>

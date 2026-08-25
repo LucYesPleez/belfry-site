@@ -1,0 +1,83 @@
+---
+import { Image } from 'astro:assets';
+import house from '../assets/house.jpg';
+---
+
+<section class="intro wrap">
+  <div class="words">
+    <p class="eyebrow">A place to stay awhile</p>
+    <div class="eyebrow-rule"></div>
+    <h2 class="display heading">
+      A heritage guesthouse<br />in the heart of<br />beautiful Bellingen.
+    </h2>
+    <p class="lede">
+      The Belfry is a place to slow down and reconnect. Nine unique rooms, verandahs that catch the
+      breeze, shared spaces, a sauna, a yoga treehouse and stunning views of the mountains.
+    </p>
+    <a class="btn btn-outline" href="/our-story">Discover the Belfry</a>
+  </div>
+
+  <Image
+    class="shot"
+    src={house}
+    alt="The Belfry guesthouse and its verandahs from above"
+    widths={[600, 900, 1240]}
+    sizes="(max-width: 60rem) 100vw, 45vw"
+    quality={80}
+  />
+</section>
+
+<style>
+  .intro {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2.5rem, 6vw, 5.25rem);
+    align-items: center;
+    padding-block: clamp(3.5rem, 8vw, 6.5rem) clamp(3rem, 7vw, 6rem);
+  }
+
+  .words {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .heading {
+    font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+    line-height: 1.3;
+    margin-top: 1.625rem;
+  }
+
+  .lede {
+    font-size: 0.9375rem;
+    line-height: 2.05;
+    color: var(--body);
+    margin-top: 1.625rem;
+    max-width: 27rem;
+  }
+
+  .words .btn {
+    margin-top: 2.125rem;
+  }
+
+  .shot {
+    width: 100%;
+    height: clamp(15rem, 30vw, 23.75rem);
+    object-fit: cover;
+  }
+
+  @media (max-width: 60rem) {
+    .intro {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .heading br {
+      display: none;
+    }
+    .words {
+      order: 1;
+    }
+    .shot {
+      order: 2;
+    }
+  }
+</style>
