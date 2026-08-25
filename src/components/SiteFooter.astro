@@ -155,8 +155,8 @@ const navigate = [
   .social a {
     display: grid;
     place-items: center;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 2.75rem;
+    height: 2.75rem;
     border-radius: 50%;
     background: rgba(241, 239, 228, 0.12);
   }
@@ -196,6 +196,21 @@ const navigate = [
     .closing {
       text-align: left;
       align-items: flex-start;
+    }
+  }
+
+  /* On a phone every link is a thumb target, so the nav and contact lines
+     get real height rather than sitting at their 17px text box. */
+  @media (hover: none) {
+    .footer nav a,
+    .line a,
+    .fine a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.75rem;
+    }
+    .line {
+      margin-top: 0;
     }
   }
 

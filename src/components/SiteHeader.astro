@@ -7,7 +7,7 @@ const links = [
 ];
 ---
 
-<header class="header">
+<header class="header" data-header>
   <div class="frost"></div>
   <div class="bar">
     <a class="mark" href="/">
@@ -21,12 +21,53 @@ const links = [
 
     <div class="actions">
       <a class="btn btn-solid book" href="/book">Book your stay</a>
-      <button class="menu" type="button" aria-label="Open menu" aria-expanded="false">
+      <button
+        class="menu"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-menu-toggle
+      >
         <span></span><span></span><span></span>
       </button>
     </div>
   </div>
+
+  <div class="panel" id="mobile-menu" hidden data-menu-panel>
+    <nav aria-label="Primary, mobile">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+    <a class="btn btn-solid panel-book" href="/book">Book your stay</a>
+  </div>
 </header>
+
+<script>
+  const header = document.querySelector('[data-header]');
+  const toggle = header?.querySelector('[data-menu-toggle]');
+  const panel = header?.querySelector('[data-menu-panel]');
+
+  const setOpen = (open) => {
+    if (!header || !toggle || !panel) return;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    panel.hidden = !open;
+    header.classList.toggle('is-open', open);
+  };
+
+  toggle?.addEventListener('click', () => {
+    setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+
+  // The panel only exists at narrow widths; don't leave it open on resize.
+  window.matchMedia('(min-width: 60rem)').addEventListener('change', (e) => {
+    if (e.matches) setOpen(false);
+  });
+</script>
 
 <style>
   .header {
@@ -124,12 +165,18 @@ const links = [
   }
 
   .menu {
-    display: flex;
+    display: none;
     flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
     gap: 5px;
     background: none;
     border: 0;
-    padding: 0.5rem;
+    /* a 44px target without moving the bars visually */
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    margin-right: -0.5rem;
     cursor: pointer;
   }
 
@@ -138,12 +185,66 @@ const links = [
     width: 1.625rem;
     height: 1.5px;
     background: #f1ede4;
+    transition:
+      transform 0.25s ease,
+      opacity 0.2s ease;
+  }
+
+  .header.is-open .menu span:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+
+  .header.is-open .menu span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .header.is-open .menu span:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  .panel {
+    position: relative;
+    margin: 0.75rem var(--gutter) 0;
+    padding: 0.5rem 0 1.25rem;
+    background: rgba(26, 21, 15, 0.9);
+    backdrop-filter: blur(10px);
+  }
+
+  .panel nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .panel nav a {
+    display: flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding-inline: 1.25rem;
+    color: #f1ede4;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .panel nav a:hover {
+    color: #fff;
+    background: rgba(241, 237, 228, 0.08);
+  }
+
+  .panel-book {
+    display: block;
+    margin: 0.75rem 1.25rem 0;
+    text-align: center;
   }
 
   @media (max-width: 60rem) {
     .nav,
     .book {
       display: none;
+    }
+    .menu {
+      display: flex;
     }
     .bar {
       justify-content: space-between;
