@@ -1,15 +1,23 @@
 ---
-// Logo artwork not supplied yet — each award renders as a text lockup with a
-// placeholder mark. Drop the real files into src/assets and swap `mark` for an
-// <Image> when they arrive.
+import { Image } from 'astro:assets';
+import nswHallOfFame from '../assets/awards/nsw-hall-of-fame.png';
+import northCoast2024 from '../assets/awards/north-coast-2024.png';
+import nsw2025 from '../assets/awards/nsw-2025.png';
+import nsw2026 from '../assets/awards/nsw-2026.png';
+import australian2025 from '../assets/awards/australian-2025.png';
+import qualityTourism from '../assets/awards/quality-tourism.png';
+import sustainableTourism from '../assets/awards/sustainable-tourism.png';
+
+// Marks are cut from the supplied layout, so they are low-resolution. Replace
+// with vector or full-size originals from the awarding bodies before launch.
 const awards = [
-  { body: 'NSW Regional Tourism Awards', year: '2026', result: 'Hall of Fame' },
-  { body: 'North Coast Tourism Awards', year: '2024', result: 'Gold' },
-  { body: 'NSW Regional Tourism Awards', year: '2025', result: 'Gold' },
-  { body: 'NSW Regional Tourism Awards', year: '2026', result: 'Gold' },
-  { body: 'Australian Tourism Awards', year: '2025', result: 'Highly Commended', highlight: true },
-  { body: 'Quality Tourism', result: 'Accredited Business' },
-  { body: 'Sustainable Tourism', result: 'Accredited Business' },
+  { logo: nswHallOfFame, alt: 'NSW Regional Tourism Awards', body: 'NSW Regional Tourism Awards', year: '2026', result: 'Hall of Fame', wide: true },
+  { logo: northCoast2024, alt: 'North Coast Tourism Awards', body: 'North Coast Tourism Awards', year: '2024', result: 'Gold' },
+  { logo: nsw2025, alt: 'NSW Regional Tourism Awards', body: 'NSW Regional Tourism Awards', year: '2025', result: 'Gold' },
+  { logo: nsw2026, alt: 'NSW Regional Tourism Awards', body: 'NSW Regional Tourism Awards', year: '2026', result: 'Gold' },
+  { logo: australian2025, alt: 'Australian Tourism Awards', body: 'Australian Tourism Awards', year: '2025', result: 'Highly Commended', highlight: true },
+  { logo: qualityTourism, alt: 'Quality Tourism accredited business', body: 'Quality Tourism', result: 'Accredited Business' },
+  { logo: sustainableTourism, alt: 'Sustainable Tourism accredited business', body: 'Sustainable Tourism', result: 'Accredited Business' },
 ];
 ---
 
@@ -25,7 +33,7 @@ const awards = [
       {
         awards.map((a) => (
           <li>
-            <span class="mark" aria-hidden="true" />
+            <Image class:list={['mark', { wide: a.wide }]} src={a.logo} alt={a.alt} widths={[56, 112]} sizes="56px" />
             <div class="text">
               <p class="body-name">{a.body}</p>
               {a.year && <p class="year">{a.year}</p>}
@@ -82,8 +90,8 @@ const awards = [
   .row li {
     display: flex;
     align-items: center;
-    gap: 0.875rem;
-    padding-inline: 1.25rem;
+    gap: 0.75rem;
+    padding-inline: 0.9375rem;
     border-left: 1px solid var(--hairline);
   }
 
@@ -92,32 +100,33 @@ const awards = [
     padding-left: 0;
   }
 
-  /* Stand-in for the award artwork. */
   .mark {
     flex: none;
-    width: 2.75rem;
-    height: 2.75rem;
-    border: 1px dashed var(--rule);
-    border-radius: 50%;
+    width: 2.5rem;
+    height: auto;
+  }
+
+  .mark.wide {
+    width: 3.5rem;
   }
 
   .body-name {
-    font-size: 0.6875rem;
+    font-size: 0.625rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    line-height: 1.4;
+    line-height: 1.45;
     color: var(--ink);
   }
 
   .year {
-    font-size: 0.6875rem;
+    font-size: 0.625rem;
     letter-spacing: 0.1em;
     color: var(--body);
-    margin-top: 0.5rem;
+    margin-top: 0.4375rem;
   }
 
   .result {
-    font-size: 0.6875rem;
+    font-size: 0.625rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--body);
