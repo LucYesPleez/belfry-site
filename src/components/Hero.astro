@@ -9,7 +9,7 @@ import SiteHeader from './SiteHeader.astro';
 // The portrait cut is taken from the right of the same photo, where the
 // seating, the flowers and the mountains stack into a vertical composition.
 const wide = await getImage({ src: hero, widths: [900, 1400, 2000], format: 'webp', quality: 78 });
-const tall = await getImage({ src: heroPortrait, widths: [450, 900], format: 'webp', quality: 80 });
+const tall = await getImage({ src: heroPortrait, widths: [630, 1260], format: 'webp', quality: 80 });
 ---
 
 <section class="hero">
@@ -134,6 +134,38 @@ const tall = await getImage({ src: heroPortrait, widths: [450, 900], format: 'we
     }
     .copy {
       padding-block: 0 3rem;
+    }
+
+    /* The phone frame renders at 140% of the box, anchored right, so 40% of
+       it sits off-screen to the left. The pan slides it across to reveal that
+       surplus: the eye starts on the seating and travels out to the valley.
+       No sensors and no permission prompt, unlike a gyro version. */
+    .shot img {
+      left: auto;
+      right: 0;
+      width: 140%;
+      /* beats the global img { max-width: 100% } reset */
+      max-width: none;
+      will-change: transform;
+      animation: hero-pan 34s ease-in-out infinite alternate;
+    }
+
+    @keyframes hero-pan {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        /* 28.571% of the image's own width == 40% of the box */
+        transform: translateX(28.571%);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .shot img {
+        animation: none;
+        /* park it mid-pan so the framing still reads as composed */
+        transform: translateX(14%);
+      }
     }
   }
 </style>
