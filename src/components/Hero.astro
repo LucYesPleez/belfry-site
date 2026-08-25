@@ -101,8 +101,14 @@ import SiteHeader from './SiteHeader.astro';
 
   @media (max-width: 60rem) {
     .hero {
-      min-height: 88svh;
+      min-height: 82svh;
       justify-content: flex-end;
+    }
+    /* A 3:2 photo in a tall portrait box crops to roughly a third of its
+       width. Bias the crop left so the valley and the mountains survive
+       instead of centring on the balustrade. */
+    .shot {
+      object-position: 32% 50%;
     }
     .wash {
       background: linear-gradient(
