@@ -18,11 +18,13 @@ const hallOfFame = {
   result: 'Hall of Fame',
 };
 
+// The three golds take the first row; the commendation and the two standing
+// accreditations follow on the second.
 const rest = [
-  { logo: australian2025, alt: 'Australian Tourism Awards', body: 'Australian Tourism Awards', year: '2025', result: 'Highly Commended', highlight: true },
   { logo: northCoast2024, alt: 'North Coast Tourism Awards', body: 'North Coast Tourism Awards', year: '2024', result: 'Gold' },
   { logo: nsw2025, alt: 'NSW Regional Tourism Awards', body: 'NSW Regional Tourism Awards', year: '2025', result: 'Gold' },
   { logo: nsw2026, alt: 'NSW Regional Tourism Awards', body: 'NSW Regional Tourism Awards', year: '2026', result: 'Gold' },
+  { logo: australian2025, alt: 'Australian Tourism Awards', body: 'Australian Tourism Awards', year: '2025', result: 'Highly Commended', highlight: true },
   { logo: qualityTourism, alt: 'Quality Tourism accredited business', body: 'Quality Tourism', result: 'Accredited Business' },
   { logo: sustainableTourism, alt: 'Sustainable Tourism accredited business', body: 'Sustainable Tourism', result: 'Accredited Business' },
 ];
@@ -197,18 +199,21 @@ const rest = [
     }
   }
 
+  /* Two across on a phone as well — three rows of two. The mark moves above
+     the text, since side by side leaves the labels about 100px to wrap in. */
   @media (max-width: 34rem) {
-    .feature {
-      justify-content: flex-start;
-    }
     .grid {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 1.5rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.75rem 0;
     }
     .grid li {
+      flex-direction: column;
+      gap: 0.75rem;
+      text-align: center;
+      padding-inline: 0.75rem;
+    }
+    .grid li:nth-child(odd) {
       border-left: 0;
-      justify-content: flex-start;
-      padding-inline: 0;
     }
   }
 </style>
