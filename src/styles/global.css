@@ -21,8 +21,10 @@
   --on-dark-body: #ddd5c6;
   --on-dark-muted: #c3b9a4;
 
-  --display: 'Bodoni Moda', 'Didot', 'Times New Roman', Georgia, serif;
-  --sans: 'Jost', 'Century Gothic', 'Avenir Next', system-ui, sans-serif;
+  /* Cormorant Garamond carries the editorial voice; DM Sans does every
+     functional job. Nothing on the site should reach past these two. */
+  --display: 'Cormorant Garamond', 'EB Garamond', Georgia, 'Times New Roman', serif;
+  --sans: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --gutter: clamp(1.5rem, 6vw, 6.25rem);
   --max: 77.5rem;
@@ -55,7 +57,8 @@ body {
   background: var(--cream);
   color: var(--ink);
   font-family: var(--sans);
-  font-weight: 300;
+  font-weight: 400;
+  line-height: 1.8;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -63,6 +66,15 @@ body {
 img {
   display: block;
   max-width: 100%;
+}
+
+/* Form controls don't inherit type from the page, so they fall back to Arial. */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  letter-spacing: inherit;
 }
 
 a {
@@ -96,7 +108,9 @@ p {
 /* eyebrow label above a section heading */
 .eyebrow {
   font-size: 0.6875rem;
-  letter-spacing: 0.2em;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -108,10 +122,13 @@ p {
   margin-top: 0.875rem;
 }
 
+/* Cormorant sets small and airy, so headings run tight and a touch larger
+   than the sans would need. Letter-spacing stays near zero at display sizes. */
 .display {
   font-family: var(--display);
   font-weight: 400;
-  line-height: 1.28;
+  line-height: 1.12;
+  letter-spacing: 0.005em;
   text-wrap: pretty;
 }
 
@@ -119,8 +136,11 @@ p {
 
 .btn {
   display: inline-block;
+  font-family: var(--sans);
   font-size: 0.75rem;
-  letter-spacing: 0.14em;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   padding: 0.9375rem 1.75rem;
   transition:
