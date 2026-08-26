@@ -241,9 +241,24 @@ const links = [
   }
 
   @media (max-width: 60rem) {
-    .nav,
-    .book {
+    .nav {
       display: none;
+    }
+    /* Booking moves into the bar itself. The wordmark gives up some size to
+       make room for it beside the menu. */
+    .mark-name {
+      font-size: 1.375rem;
+      /* never let the wordmark break across two lines */
+      white-space: nowrap;
+    }
+    .book {
+      font-size: 0.5625rem;
+      letter-spacing: 0.08em;
+      padding: 0.6875rem 0.6875rem;
+      white-space: nowrap;
+    }
+    .actions {
+      gap: 0.5rem;
     }
     .menu {
       display: flex;
