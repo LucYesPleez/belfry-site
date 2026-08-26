@@ -1,0 +1,412 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { sections, tabIcons } from '../data/bellingen.js';
+import { bookingUrl } from '../data/site.js';
+import hero from '../assets/bellingen/hero.jpg';
+---
+
+<Base
+  title="Bellingen — The Belfry Guesthouse & Retreat"
+  description="One minute from the heart of Bellingen. Cafés, restaurants, markets, the river and everything you need for the perfect stay."
+>
+  <main>
+    <section class="hero">
+      <Image
+        class="shot"
+        src={hero}
+        alt="Bellingen's heritage main street at sunset"
+        widths={[900, 1400, 1800]}
+        sizes="100vw"
+        quality={80}
+        loading="eager"
+        fetchpriority="high"
+      />
+      <div class="wash"></div>
+
+      <SiteHeader />
+
+      <div class="copy wrap">
+        <h1 class="display name">Bellingen</h1>
+        <p class="display kind">A village with heart.</p>
+        <p class="lede">
+          One minute from the heart of Bellingen. Cafés, restaurants, markets, the river and
+          everything you need for the perfect stay.
+        </p>
+      </div>
+    </section>
+
+    <nav class="tabs" aria-label="Jump to a section">
+      <ul class="wrap tabs-inner">
+        {
+          sections.map((s) => (
+            <li>
+              <a href={`#${s.id}`} data-tab={s.id}>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  set:html={tabIcons[s.icon]}
+                />
+                <span>{s.tab}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    {
+      sections.map((s) => (
+        <section class="strip" id={s.id}>
+          <div class="wrap strip-inner">
+            <div class="words">
+              <p class="eyebrow">{s.tab}</p>
+              <div class="eyebrow-rule" />
+              <h2 class="display heading">{s.heading}</h2>
+              <p class="blurb">{s.lede}</p>
+              <a class="btn btn-outline" href={bookingUrl}>
+                {s.cta}
+              </a>
+            </div>
+
+            <ul class="cards">
+              {s.cards.map((c) => (
+                <li>
+                  <Image
+                    class="thumb"
+                    src={c.image}
+                    alt={c.title}
+                    widths={[210, 420]}
+                    sizes="(max-width: 60rem) 45vw, 210px"
+                    quality={78}
+                  />
+                  <h3 class="card-title">{c.title}</h3>
+                  <p class="card-note">{c.note}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ))
+    }
+
+    <section class="closing">
+      <Image class="shot" src={hero} alt="" aria-hidden="true" widths={[900, 1800]} sizes="100vw" quality={70} loading="lazy" />
+      <div class="closing-wash"></div>
+      <div class="wrap closing-inner">
+        <div class="closing-words">
+          <p class="display closing-heading">Stay close. Explore more.</p>
+          <p class="display closing-heading">The best of Bellingen is right here.</p>
+          <a class="btn btn-solid" href={bookingUrl}>Book your stay</a>
+        </div>
+        <p class="badge">
+          <span>1 minute</span>
+          to the heart<br />of Bellingen
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter />
+</Base>
+
+<script>
+  // Underline whichever section the reader is actually in.
+  const links = [...document.querySelectorAll('[data-tab]')];
+  const targets = links.map((l) => document.getElementById(l.dataset.tab)).filter(Boolean);
+
+  if (targets.length) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          for (const l of links) l.classList.toggle('is-current', l.dataset.tab === e.target.id);
+        }
+      },
+      { rootMargin: '-45% 0px -50% 0px' }
+    );
+    for (const t of targets) io.observe(t);
+  }
+</script>
+
+<style>
+  /* hero ------------------------------------------------------------------ */
+
+  .hero {
+    position: relative;
+    min-height: min(34rem, 62svh);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .shot {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .wash {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(20, 16, 11, 0.82) 0%,
+      rgba(20, 16, 11, 0.55) 45%,
+      rgba(20, 16, 11, 0.12) 100%
+    );
+  }
+
+  .copy {
+    position: relative;
+    width: 100%;
+    padding-top: 3.5rem;
+  }
+
+  .name {
+    font-size: clamp(2.75rem, 7vw, 5rem);
+    letter-spacing: 0.045em;
+    line-height: 1.02;
+    color: #fdfcf8;
+    text-transform: uppercase;
+  }
+
+  .kind {
+    font-size: clamp(1.375rem, 2.6vw, 2.125rem);
+    color: #f3eee2;
+    margin-top: 0.625rem;
+  }
+
+  .lede {
+    font-size: 0.9375rem;
+    line-height: 1.95;
+    color: #ded6c8;
+    max-width: 24rem;
+    margin-top: 1.5rem;
+  }
+
+  /* section tabs ---------------------------------------------------------- */
+
+  .tabs {
+    background: var(--cream);
+    border-bottom: 1px solid var(--hairline);
+    /* the rail bleeds past the gutter to scroll; clip it here or the whole
+       page scrolls sideways with it */
+    overflow: hidden;
+  }
+
+  .tabs-inner {
+    list-style: none;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: clamp(0.5rem, 3vw, 2.75rem);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tabs-inner::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tabs a {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 1.125rem 0.25rem;
+    color: var(--body);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+
+  .tabs a:hover {
+    color: var(--ink);
+  }
+
+  .tabs a.is-current {
+    color: var(--ink);
+    border-bottom-color: var(--olive);
+  }
+
+  /* content strips -------------------------------------------------------- */
+
+  .strip {
+    background: var(--cream);
+    scroll-margin-top: 3.5rem;
+  }
+
+  .strip + .strip .strip-inner {
+    border-top: 1px solid var(--hairline);
+  }
+
+  .strip-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    padding-block: clamp(2rem, 4vw, 3rem);
+  }
+
+  .words {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .heading {
+    font-size: clamp(1.5rem, 2.6vw, 2.125rem);
+    line-height: 1.15;
+    margin-top: 1rem;
+    white-space: pre-line;
+  }
+
+  .blurb {
+    font-size: 0.8125rem;
+    line-height: 1.85;
+    color: var(--body);
+    margin-top: 1rem;
+  }
+
+  .words .btn {
+    margin-top: 1.5rem;
+  }
+
+  .cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(0.75rem, 1.5vw, 1.25rem);
+  }
+
+  .thumb {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .card-title {
+    font-family: var(--sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-top: 0.875rem;
+  }
+
+  .card-note {
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: var(--body);
+    margin-top: 0.375rem;
+  }
+
+  /* closing band ---------------------------------------------------------- */
+
+  .closing {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .closing-wash {
+    position: absolute;
+    inset: 0;
+    background: rgba(28, 24, 16, 0.78);
+  }
+
+  .closing-inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1.5rem, 5vw, 4rem);
+    padding-block: clamp(2rem, 4vw, 2.75rem);
+  }
+
+  .closing-words {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .closing-heading {
+    font-size: clamp(1.25rem, 2.4vw, 1.875rem);
+    line-height: 1.25;
+    color: #f4f0e6;
+  }
+
+  .closing-words .btn {
+    margin-top: 1.25rem;
+  }
+
+  .badge {
+    flex: none;
+    display: grid;
+    place-content: center;
+    width: 8.125rem;
+    height: 8.125rem;
+    border: 1px solid rgba(244, 240, 230, 0.45);
+    border-radius: 50%;
+    text-align: center;
+    font-size: 0.5625rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    line-height: 1.7;
+    text-transform: uppercase;
+    color: #ece6d8;
+  }
+
+  .badge span {
+    display: block;
+    font-family: var(--display);
+    font-size: 1.125rem;
+    letter-spacing: 0.06em;
+    text-transform: none;
+  }
+
+  @media (max-width: 60rem) {
+    .hero .wash {
+      background: linear-gradient(
+        180deg,
+        rgba(20, 16, 11, 0.5) 0%,
+        rgba(20, 16, 11, 0.35) 40%,
+        rgba(20, 16, 11, 0.85) 100%
+      );
+    }
+    .strip-inner {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem 1rem;
+    }
+    .tabs-inner {
+      justify-content: flex-start;
+      margin-inline: calc(var(--gutter) * -1);
+      padding-inline: var(--gutter);
+    }
+    .closing-inner {
+      flex-direction: column;
+    }
+  }
+</style>
