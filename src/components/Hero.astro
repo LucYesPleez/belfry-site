@@ -116,8 +116,10 @@ const tall = await getImage({ src: heroPortrait, widths: [630, 1260], format: 'w
     margin-top: 1.125rem;
   }
 
+  /* Booking lives in the header on desktop and in the strip below the hero
+     on phones, so the hero itself carries no button at any width. */
   .copy .btn {
-    margin-top: 2.125rem;
+    display: none;
   }
 
   @media (max-width: 60rem) {
@@ -133,8 +135,21 @@ const tall = await getImage({ src: heroPortrait, widths: [630, 1260], format: 'w
         rgba(20, 17, 12, 0.78) 100%
       );
     }
+    /* The copy block was taking about two thirds of the hero on a phone.
+       Same elements, tighter rhythm, so more photograph shows. */
     .copy {
-      padding-block: 0 3rem;
+      padding-block: 0 1.25rem;
+    }
+    .name {
+      margin-top: 0.75rem;
+    }
+    .kind {
+      font-size: 1.375rem;
+      margin-top: 0.5rem;
+    }
+    .place {
+      font-size: 0.75rem;
+      margin-top: 0.625rem;
     }
 
     /* The phone frame renders at 140% of the box, anchored right, so 40% of
