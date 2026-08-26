@@ -1,4 +1,6 @@
 ---
+import { bookingUrl } from '../data/site.js';
+
 const links = [
   { label: 'Stay', href: '/stay' },
   { label: 'Experience', href: '/experience' },
@@ -20,7 +22,7 @@ const links = [
     </nav>
 
     <div class="actions">
-      <a class="btn btn-solid book" href="/book">Book your stay</a>
+      <a class="btn btn-solid book" href={bookingUrl}>Book your stay</a>
       <button
         class="menu"
         type="button"
@@ -38,7 +40,7 @@ const links = [
     <nav aria-label="Primary, mobile">
       {links.map((l) => <a href={l.href}>{l.label}</a>)}
     </nav>
-    <a class="btn btn-solid panel-book" href="/book">Book your stay</a>
+    <a class="btn btn-solid panel-book" href={bookingUrl}>Book your stay</a>
   </div>
 </header>
 

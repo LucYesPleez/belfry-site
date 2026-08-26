@@ -1,6 +1,7 @@
 ---
 import { getImage } from 'astro:assets';
 import hero from '../assets/hero.jpg';
+import { bookingUrl } from '../data/site.js';
 import heroPortrait from '../assets/hero-portrait.jpg';
 import SiteHeader from './SiteHeader.astro';
 
@@ -35,7 +36,7 @@ const tall = await getImage({ src: heroPortrait, widths: [630, 1260], format: 'w
     <h1 class="display name">The Belfry</h1>
     <p class="display kind">Guesthouse &amp; Retreat</p>
     <p class="place">Bellingen &nbsp;&middot;&nbsp; NSW</p>
-    <a class="btn btn-solid" href="/book">Book your stay</a>
+    <a class="btn btn-solid" href={bookingUrl}>Book your stay</a>
   </div>
 </section>
 
