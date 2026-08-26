@@ -251,6 +251,11 @@ const links = [
       /* never let the wordmark break across two lines */
       white-space: nowrap;
     }
+    /* keep the subline in the same proportion to the wordmark as desktop
+       (9/28); it does not shrink with it otherwise */
+    .mark-sub {
+      font-size: 0.4375rem;
+    }
     .book {
       font-size: 0.5625rem;
       letter-spacing: 0.08em;
