@@ -137,8 +137,10 @@ const tall = await getImage({ src: heroPortrait, widths: [630, 1260], format: 'w
     }
     /* The copy block was taking about two thirds of the hero on a phone.
        Same elements, tighter rhythm, so more photograph shows. */
+    /* The bar above carries the name and the booking action, so the hero is
+       left as photograph alone. */
     .copy {
-      padding-block: 0 1.25rem;
+      display: none;
     }
     .name {
       margin-top: 0.75rem;
